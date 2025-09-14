@@ -42,8 +42,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: 0.439
-    - _LineThickness: 0.849
+    - _Alpha: 0.394
+    - _LineThickness: 0.988
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:

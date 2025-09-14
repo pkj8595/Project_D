@@ -17,6 +17,6 @@ public class PlayerController : MonoBehaviour
     {
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-        transform.Translate(stats.moveSpeed * Time.deltaTime * new Vector3(h, 0, v));
+        transform.Translate(stats[StatType.MoveSpeed] * Time.deltaTime * new Vector3(h, 0, v));
     }
 }

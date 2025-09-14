@@ -28,13 +28,13 @@ public class UnitCombat : MonoBehaviour
 
     void AttackNearest()
     {
-        Collider[] targets = Physics.OverlapSphere(transform.position, stats.attackRange, targetLayer);
+        Collider[] targets = Physics.OverlapSphere(transform.position, stats[StatType.AttackRange], targetLayer);
         if (targets.Length > 0)
         {
             var targetStats = targets[0].GetComponent<UnitStats>();
             if (targetStats != null)
             {
-                targetStats.TakeDamage(stats.attackDamage);
+                targetStats.TakeDamage(stats[StatType.Attack]);
             }
         }
     }

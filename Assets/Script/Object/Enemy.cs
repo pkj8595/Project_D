@@ -22,14 +22,14 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         if (target != null)
-            transform.position = Vector3.MoveTowards(transform.position, target.position, stats.moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, target.position, stats[StatType.MoveSpeed] * Time.deltaTime);
     }
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.CompareTag("Player"))
         {
-            collision.transform.GetComponent<UnitStats>().TakeDamage(stats.attackDamage);
+            collision.transform.GetComponent<UnitStats>().TakeDamage(stats[StatType.Attack]);
             Destroy(gameObject);
         }
     }

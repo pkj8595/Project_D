@@ -23,6 +23,6 @@ public class UIManager : MonoBehaviour
     }
 
     void UpdateGold(int amount) => goldText.text = "Gold: " + amount;
-    void UpdateHP(int hp) => hpText.text = "HP: " + hp;
+    void UpdateHP(float hp) => hpText.text = "HP: " + hp;
     void UpdateWave(int wave) => waveText.text = "Wave: " + wave;
 }

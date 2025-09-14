@@ -2,26 +2,36 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
-
+using Consts;
+using Unity.VisualScripting;
 
 internal class UnitStats : MonoBehaviour
 {
-    public int maxHP = 100;
-    public int attackDamage = 10;
-    public float attackRange = 1f;
-    public float moveSpeed = 5f;
+    public float[] stats = new float[(int)StatType.Count];
+    public float maxHP => stats[(int)StatType.Hp];
 
-    private int currentHP;
+    public float this[StatType t]
+    {
+        get => stats[(int)t];
+        set => stats[(int)t] = value;
+    }
 
-    public System.Action<int> OnHPChanged;
+    private float currentHP;
+
+    public System.Action<float> OnHPChanged;
     public System.Action OnDeath;
 
     void Awake()
     {
-        currentHP = maxHP;
+        
     }
 
-    public void TakeDamage(int amount)
+    public void Init()
+    {
+        currentHP = stats[(int)StatType.Hp];
+    }
+
+    public void TakeDamage(float amount)
     {
         currentHP -= amount;
         OnHPChanged?.Invoke(currentHP);
@@ -32,11 +42,11 @@ internal class UnitStats : MonoBehaviour
         }
     }
 
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
         currentHP = Mathf.Min(currentHP + amount, maxHP);
         OnHPChanged?.Invoke(currentHP);
     }
 
-    public int GetCurrentHP() => currentHP;
+    public float GetCurrentHP() => currentHP;
 }

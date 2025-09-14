@@ -11,15 +11,13 @@ using System.Linq;
 */
 public enum StatType
 {
-    Health,         // 체력
-    AttackDamage,   // 공격력
-    Defense,        // 방어력
-    AttackSpeed,    // 공격속도
-    CriticalChance, // 치명타 확률
-    CriticalDamage, // 치명타 데미지
-    MoveSpeed,      // 이동속도
-    Cost,           // 비용
-    ResourceGain    // 자원 획득량
+    Hp,
+    Attack,
+    Defense,
+    MoveSpeed,
+    AttackSpeed,
+    AttackRange,
+    Count
 }
 
 /*

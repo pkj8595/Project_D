@@ -26,16 +26,6 @@ public class BuildingAttack : MonoBehaviour
 
     void Attack()
     {
-        Collider[] targets = Physics.OverlapSphere(transform.position, stats.attackRange, targetLayer);
-        if (targets.Length > 0)
-        {
-            var target = targets[0];
-            if (projectilePrefab != null)
-            {
-                GameObject proj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-                Projectile p = proj.GetComponent<Projectile>();
-                p.Init(target.transform, stats.attackDamage);
-            }
-        }
+        
     }
 }
