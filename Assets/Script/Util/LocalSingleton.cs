@@ -11,7 +11,7 @@ public class LocalSingleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (instance == null)
             {
-                instance = FindObjectOfType<T>();
+                instance = FindFirstObjectByType<T>();
             }
             return instance;
         }
