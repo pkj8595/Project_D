@@ -3,9 +3,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Managers : MonoBehaviour
+public class Managers : GlobalSingleton<Managers>
 {
     public Core.ResourceManager Resource { get; } = new ();
+    public Core.DataManager Data { get; } = new ();
 
     void Awake()
     {
@@ -16,6 +17,7 @@ public class Managers : MonoBehaviour
     {
         string label = "Sprite";
         await Resource.LoadAllAsync_PreLoad_Sprite(label, null);
+        await Data.Init();
     }
 
     

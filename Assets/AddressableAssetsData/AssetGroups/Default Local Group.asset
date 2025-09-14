@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 994423061bc12cc40bfea82fd7715039
   m_SerializeEntries:
+  - m_GUID: 5254fbca853a7af419d18836f2b91750
+    m_Address: Assets/_Resource/Data/tableData.json
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 62fd6071578d4b64791061bfe4e6d39b
     m_Address: Assets/Resource/Sprite
     m_ReadOnly: 0
