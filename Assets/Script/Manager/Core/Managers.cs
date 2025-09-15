@@ -11,6 +11,7 @@ public class Managers : GlobalSingleton<Managers>
     // MonoBehaviour
     public static Pooling Pool { get { return Pooling.Instance; } }
     public static MapManager Map { get { return MapManager.Instance; } }
+    public static InputManager Input { get { return InputManager.Instance; } }
 
     void Awake()
     {
@@ -27,6 +28,8 @@ public class Managers : GlobalSingleton<Managers>
 
         await Data.Init();
         Pool.Init();
+
+        Input.Init();
     }
 
     

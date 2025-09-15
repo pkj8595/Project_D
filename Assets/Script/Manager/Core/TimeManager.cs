@@ -24,24 +24,26 @@ public class TimeManager : GlobalSingleton<TimeManager>
 
     public void Awake()
     {
-        _timeScaleStack.Clear();
-        _timeScaleStack.Push(1.0f);
+        ClearTimeScale();
     }
 
     public void Update()
     {
         if (IsPaused) return;
 
+        // 업데이트 주기(기본 0.02초)를 기준으로 커스텀 업데이트를 실행할지 결정합니다.
+        float tickInterval = Time.unscaledDeltaTime;
+        // Debug.Log($"TickInterval: {tickInterval}");
+
         // 현재 시간 배율에 맞게 unscaledDeltaTime을 누적합니다.
-        _timeAccumulator += Time.unscaledDeltaTime * CurrentTimeScale;
+        _timeAccumulator += tickInterval * CurrentTimeScale;
+        // Debug.Log($"TimeAccumulator: {_timeAccumulator}");
 
-        // 물리 업데이트 주기(기본 0.02초)를 기준으로 커스텀 업데이트를 실행할지 결정합니다.
-        float tickInterval = Time.fixedDeltaTime;
-
-        while (_timeAccumulator >= tickInterval)
+        if (_timeAccumulator >= tickInterval)
         {
             _timeAccumulator -= tickInterval;
             OnControlledUpdate?.Invoke(tickInterval);
+            // Debug.Log($"OnControlledUpdate");
         }
     }
     

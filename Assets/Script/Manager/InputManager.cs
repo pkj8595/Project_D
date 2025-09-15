@@ -1,10 +1,18 @@
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
-public class InputSystem : MonoBehaviour
+public class InputManager : GlobalSingleton<InputManager>
 {
     GameObject go = null;
-    // temp - 추후 TimeManager로 이동 필요
-    private async void Update()
+
+    public void Init()
+    {
+        TimeManager.Instance.OnControlledUpdate -= InputEvent;
+        TimeManager.Instance.OnControlledUpdate += InputEvent;
+    }
+
+    public void InputEvent(float deltaTime) => InputEventAsync(deltaTime).Forget(Debug.LogError);
+    private async UniTask InputEventAsync(float deltaTime)
     {
         if (Input.GetMouseButtonDown(0))
         {
