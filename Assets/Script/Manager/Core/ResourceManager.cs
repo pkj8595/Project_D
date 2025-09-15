@@ -104,7 +104,7 @@ namespace Core
 
         #region Addressable
 
-        List<string> _labels = new List<string>() { "Preload", "UIPrefab", "Preload_Sprite" };
+        List<string> _labels = new List<string>() { "Preload", "UIPrefab", "Preload_Sprite", "Prefab" };
         public async UniTask CheckAsync_Catalog(Action callback)
         {
             var check = await Addressables.CheckForCatalogUpdates();

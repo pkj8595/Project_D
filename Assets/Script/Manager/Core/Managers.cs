@@ -5,8 +5,12 @@ using UnityEngine;
 
 public class Managers : GlobalSingleton<Managers>
 {
-    public Core.ResourceManager Resource { get; } = new ();
-    public Core.DataManager Data { get; } = new ();
+    public static Core.ResourceManager Resource { get; } = new ();
+    public static Core.DataManager Data { get; } = new ();
+
+    // MonoBehaviour
+    public static Pooling Pool { get { return Pooling.Instance; } }
+    public static MapManager Map { get { return MapManager.Instance; } }
 
     void Awake()
     {
@@ -17,12 +21,17 @@ public class Managers : GlobalSingleton<Managers>
     {
         string label = "Sprite";
         await Resource.LoadAllAsync_PreLoad_Sprite(label, null);
+
+        label = "Prefab";
+        await Resource.LoadAsync_UIPrefab(label, null);
+
         await Data.Init();
+        Pool.Init();
     }
 
     
-    void Update()
-    {
+    // void Update()
+    // {
         
-    }
+    // }
 }
