@@ -12,6 +12,7 @@ public class Managers : GlobalSingleton<Managers>
     public static Pooling Pool { get { return Pooling.Instance; } }
     public static MapManager Map { get { return MapManager.Instance; } }
     public static InputManager Input { get { return InputManager.Instance; } }
+    public static TimeManager Time { get { return TimeManager.Instance; } }
 
     void Awake()
     {
@@ -30,7 +31,7 @@ public class Managers : GlobalSingleton<Managers>
         Pool.Init();
 
         Input.Init();
-        Map.Init();
+        await Map.Init();
     }
 
     

@@ -9,12 +9,17 @@ public class InputManager : GlobalSingleton<InputManager>
     // GameObject go = null;
 
     public event Action OnLeftClickDown;
+    public event Action OnLeftClick;
+    public event Action OnLeftClickUp;
     public event Action OnRightClickDown;
+    public event Action OnRightClick;
+    public event Action OnRightClickUp;
+    public event Action OnUpdate;
 
     public void Init()
     {
-        TimeManager.Instance.OnControlledUpdate -= InputEvent;
-        TimeManager.Instance.OnControlledUpdate += InputEvent;
+        Managers.Time.OnControlledUpdate -= InputEvent;
+        Managers.Time.OnControlledUpdate += InputEvent;
     }
 
     public void InputEvent(float deltaTime) => InputEventAsync(deltaTime).Forget(Debug.LogError);
@@ -22,25 +27,29 @@ public class InputManager : GlobalSingleton<InputManager>
     {
         if (Input.GetMouseButtonDown(0))
         {
-            // test
-            // var cell = Managers.Map.ScreenToCell(Input.mousePosition);
-            // Debug.Log($"cell: {cell}");
-            // go = await Managers.Pool.Get(nameof(Gold));            
-            // go.transform.position = Managers.Map.CellToWorld(cell);
-            // go.SetActive(true);
-
             OnLeftClickDown?.Invoke();
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            OnLeftClick?.Invoke();
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            OnLeftClickUp?.Invoke();
         }
         else if (Input.GetMouseButtonDown(1))
         {
-            // test
-            // if (go != null)
-            // {
-            //     // Debug.Log("Push");
-            //     Managers.Pool.Push(go);
-            // }
-
             OnRightClickDown?.Invoke();
         }
+        else if (Input.GetMouseButton(1))
+        {
+            OnRightClick?.Invoke();
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            OnRightClickUp?.Invoke();
+        }
+
+        OnUpdate?.Invoke();
     }
 }
