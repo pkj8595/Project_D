@@ -30,6 +30,7 @@ public class Managers : GlobalSingleton<Managers>
         Pool.Init();
 
         Input.Init();
+        Map.Init();
     }
 
     

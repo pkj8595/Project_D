@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class MapManager : LocalSingleton<MapManager>
 {
+    #region Grid
     [SerializeField] private Grid grid;
     private Vector2 cellOffset = new Vector2(0.5f, 0.5f);
 
@@ -32,5 +33,12 @@ public class MapManager : LocalSingleton<MapManager>
 
         var world = grid.CellToWorld(new Vector3Int(cell.x, cell.y, 0));
         return new Vector2(world.x+cellOffset.x, world.y+cellOffset.y);
+    }
+    #endregion
+
+
+    public void Init()
+    {
+        
     }
 }
