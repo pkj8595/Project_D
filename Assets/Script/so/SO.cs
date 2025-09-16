@@ -108,14 +108,7 @@ public class EnemyData : ScriptableObject
 - StatModifier가 string key 대신 StatType enum을 사용하도록 변경했습니다.
 ============================================================
 */
-[System.Serializable]
-public class StatModifier
-{
-    public StatType targetStat; // 수정할 스탯의 종류
-    public float value;
-    public enum ModifierType { Additive, Multiplier } // 더하기 or 곱하기
-    public ModifierType type;
-}
+
 
 [CreateAssetMenu(fileName = "New Upgrade Data", menuName = "Game Data/Upgrade")]
 public class UpgradeData : ScriptableObject

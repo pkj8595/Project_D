@@ -12,9 +12,6 @@ public class TimeManager : GlobalSingleton<TimeManager>
     private readonly Stack<float> _timeScaleStack = new ();
     private float _timeAccumulator = 0f;
 
-    // 현재 실행 중인 시간 스케일 변경 코루틴을 저장합니다.
-    private Coroutine _timeScaleCoroutine;
-
     /// <summary>
     /// 현재 적용되고 있는 커스텀 시간 배율을 반환합니다.
     /// </summary>
