@@ -1,5 +1,8 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using System.Linq;
+using System;
+using Random = UnityEngine.Random;
 
 public class MapManager : LocalSingleton<MapManager>
 {
@@ -66,17 +69,39 @@ public class MapManager : LocalSingleton<MapManager>
     #endregion
 
 
+    public PlayerController PlayerController { get; private set; }
     public async UniTask Init()
     {
         // 플레이어 타워
         var playerTower = await Managers.Pool.Get(nameof(PlayerTower));
-        playerTower.transform.position = CellToWorld(new Vector2Int(0, 0));
+        var playerTowerController = playerTower.GetComponent<PlayerTower>();
+        playerTowerController.Init(CellToWorld(new Vector2Int(0, 0)));
 
         // 플레이어
-        var initPos = CellToWorld(new Vector2Int(0, 0));
         var player = await Managers.Pool.Get("Player");
-        player.transform.position = initPos;
-        var playerController = player.GetComponent<PlayerController>();
-        playerController.Init(initPos);
+        PlayerController = player.GetComponent<PlayerController>();
+        PlayerController.Init(CellToWorld(new Vector2Int(0, 0)));
+
+        await SpawnEnemy();
+    }
+    /// <summary>
+    /// 적 생성 (테스트용)
+    /// </summary>
+    /// <returns></returns>
+    private async UniTask SpawnEnemy()
+    {
+        while (true)
+        // for (int i = 0; i < 1000; i++)
+        {
+            var enemy = await Managers.Pool.Get("Enemy");
+            var enemyController = enemy.GetComponent<Enemy>();
+            
+            var viewportPosY = Random.Range(0f-0.1f, 1f+0.1f);
+            var viewportPosX = viewportPosY >= 0f && viewportPosY <= 1f ? (Random.Range(0, 1+1) == 0 ? 0f-0.1f : 1f+0.1f) : Random.Range(0f-0.1f, 1f+0.1f);
+            var initPos = Camera.main.ViewportToWorldPoint(new Vector2(viewportPosX, viewportPosY));
+            enemyController.Init(initPos);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        }
     }
 }

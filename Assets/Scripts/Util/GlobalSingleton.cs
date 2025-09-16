@@ -6,17 +6,29 @@ using UnityEngine;
 // Ex) GameManager : GlobalSingleTon<GameManager>
 public class GlobalSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
+    protected static readonly object _lock = new object();
+
     protected static T instance = null;
     public static T Instance
     {
         get
         {
-            if (instance == null)
+            lock (_lock)
             {
-                instance = new GameObject($"@{typeof(T).Name}").AddComponent<T>();
-                DontDestroyOnLoad(instance.gameObject);
+                if (instance == null)
+                {
+                    instance = new GameObject($"@{typeof(T).Name}").AddComponent<T>();
+                    DontDestroyOnLoad(instance.gameObject);
+                }    
             }
+            
             return instance;
         }
+    }
+
+    public bool IsDestroyed { get; protected set; } = false;
+    protected void OnDestroy()
+    {
+        IsDestroyed = true;
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8153925294726916644}
   - component: {fileID: 2998134549943996839}
   - component: {fileID: 3173774906063359203}
-  - component: {fileID: 1128433249303441120}
+  - component: {fileID: -1211821935628855284}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dda39f3ffdcfa94585fe390517a3d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
---- !u!114 &1128433249303441120
+--- !u!114 &-1211821935628855284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

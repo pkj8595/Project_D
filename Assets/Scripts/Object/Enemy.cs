@@ -7,30 +7,53 @@ public class Enemy : MonoBehaviour
 {
     private Transform target;
     private UnitStats stats;
+    private Moveable moveable;
 
-    void Start()
+    private void Awake()
     {
         stats = GetComponent<UnitStats>();
-        target = GameManager.Instance.Player.transform;
         stats.OnDeath += () =>
         {
             ResourceManager.AddGold(10);
             Destroy(gameObject);
         };
+
+        moveable = GetComponent<Moveable>();
+        Managers.Time.OnUpdate += UpdateProcess;
     }
 
-    void Update()
+    public void Init(Vector2 initPos)
     {
-        if (target != null)
-            transform.position = Vector3.MoveTowards(transform.position, target.position, stats[StatType.MoveSpeed] * Time.deltaTime);
+        transform.position = initPos;
+        target = Managers.Map.PlayerController.transform;        
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void UpdateProcess()
     {
-        if (collision.transform.CompareTag("Player"))
+        if (moveable != null && target != null)
         {
-            collision.transform.GetComponent<UnitStats>().TakeDamage(stats[StatType.Attack]);
-            Destroy(gameObject);
+            moveable.TargetPos = target.position;
         }
+    }
+
+    // void Update()
+    // {
+    //     if (target != null)
+    //         transform.position = Vector3.MoveTowards(transform.position, target.position, stats[StatType.MoveSpeed] * Time.deltaTime);
+    // }
+
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     if (collision.transform.CompareTag("Player"))
+    //     {
+    //         collision.transform.GetComponent<UnitStats>().TakeDamage(stats[StatType.Attack]);
+    //         Destroy(gameObject);
+    //     }
+    // }
+
+    private void OnDestroy()
+    {
+        if (!Managers.Time.IsDestroyed)
+            Managers.Time.OnUpdate -= UpdateProcess;
     }
 }

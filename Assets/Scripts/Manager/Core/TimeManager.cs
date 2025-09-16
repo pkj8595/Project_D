@@ -6,7 +6,7 @@ public class TimeManager : GlobalSingleton<TimeManager>
 {
     public event Action OnPaused;
     public event Action OnResumed;
-    public event Action<float> OnControlledUpdate;
+    public event Action OnUpdate;
 
     // 시간 스케일 변경 요청을 스택으로 관리하여 여러 효과가 겹쳐도 안전하게 처리합니다.
     private readonly Stack<float> _timeScaleStack = new ();
@@ -39,8 +39,8 @@ public class TimeManager : GlobalSingleton<TimeManager>
         if (_timeAccumulator >= tickInterval)
         {
             _timeAccumulator -= tickInterval;
-            OnControlledUpdate?.Invoke(tickInterval);
-            // Debug.Log($"OnControlledUpdate");
+            OnUpdate?.Invoke();
+            // Debug.Log($"OnUpdate");
         }
     }
     

@@ -15,23 +15,28 @@ public class PlayerTower : MonoBehaviour
         };
     }
 
-    void Update()
+    public void Init(Vector2 initPos)
     {
-        if (target != null)
-            Attack();
+        transform.position = initPos;
     }
 
-    void Attack()
-    {
-        if (target != null)
-            target.GetComponent<UnitStats>().TakeDamage(stats[StatType.Attack]);
-    }
+    // void Update()
+    // {
+    //     if (target != null)
+    //         Attack();
+    // }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.CompareTag("Enemy"))
-        {
-            collision.transform.GetComponent<UnitStats>().TakeDamage(stats[StatType.Attack]);
-        }
-    }
+    // void Attack()
+    // {
+    //     if (target != null)
+    //         target.GetComponent<UnitStats>().TakeDamage(stats[StatType.Attack]);
+    // }
+
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     if (collision.transform.CompareTag("Enemy"))
+    //     {
+    //         collision.transform.GetComponent<UnitStats>().TakeDamage(stats[StatType.Attack]);
+    //     }
+    // }
 }

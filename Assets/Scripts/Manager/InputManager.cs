@@ -1,13 +1,9 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
-using Unity.Profiling;
 
 public class InputManager : GlobalSingleton<InputManager>
 {
-    // test
-    // GameObject go = null;
-
     public event Action OnLeftClickDown;
     public event Action OnLeftClick;
     public event Action OnLeftClickUp;
@@ -18,12 +14,11 @@ public class InputManager : GlobalSingleton<InputManager>
 
     public void Init()
     {
-        Managers.Time.OnControlledUpdate -= InputEvent;
-        Managers.Time.OnControlledUpdate += InputEvent;
+        Managers.Time.OnUpdate -= InputEvent;
+        Managers.Time.OnUpdate += InputEvent;
     }
 
-    public void InputEvent(float deltaTime) => InputEventAsync(deltaTime).Forget(Debug.LogError);
-    private async UniTask InputEventAsync(float deltaTime)
+    public void InputEvent()
     {
         if (Input.GetMouseButtonDown(0))
         {

@@ -2,5 +2,6 @@ using UnityEngine;
 
 public interface IMoveable
 {
-    public void Move(Vector2 targetPos);
+    public Vector2 TargetPos { get; set; }
+    public void Move();
 }

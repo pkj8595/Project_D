@@ -4,14 +4,19 @@ using UnityEngine;
 public class Moveable : MonoBehaviour, IMoveable
 {
     private UnitStats stats;
-
-    void Awake()
+    private void Awake()
     {
         stats = GetComponent<UnitStats>();
     }
-
-    public void Move(Vector2 targetPos)
+    private void Start()
     {
-        transform.position = Vector2.MoveTowards(transform.position, targetPos, stats[StatType.MoveSpeed] * Time.deltaTime);
+        Managers.Time.OnUpdate -= Move;
+        Managers.Time.OnUpdate += Move;
+    }
+
+    public Vector2 TargetPos { get; set; }
+    public void Move()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, TargetPos, stats[StatType.MoveSpeed] * Time.deltaTime);
     }
 }
