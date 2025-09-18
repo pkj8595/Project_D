@@ -3,8 +3,8 @@ using R3;
 
 namespace Data
 {
-    public class Resouce
+    public class ResourceState
     {
-        ReactiveProperty<int> gold = new ReactiveProperty<int>(0);
+        public ReactiveProperty<int> Gold = new ReactiveProperty<int>(0);
     }
 }

@@ -1,28 +1,38 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using R3;
+using Data;
 
-public class UIManager : MonoBehaviour
+public class UIManager : View<UIManagerPresenter, UIManagerModel>
 {
-    public Text goldText;
-    public Text hpText;
-    public Text waveText;
+    public TMP_Text goldText;
+    // public TMP_Text hpText;
+    // public TMP_Text waveText;
 
-    void OnEnable()
+    public override void Init()
     {
-        GameEvents.OnGoldChanged += UpdateGold;
-        GameEvents.OnPlayerHPChanged += UpdateHP;
-        GameEvents.OnWaveChanged += UpdateWave;
+        Debug.Log("UIManager Init");
+        // 유저 골드 데이터 변경 시, UI 업데이트
+        Managers.State.Resource.Gold.Subscribe(UpdateGold);
     }
 
-    void OnDisable()
+    public override void UpdateUI(UIManagerModel model)
     {
-        GameEvents.OnGoldChanged -= UpdateGold;
-        GameEvents.OnPlayerHPChanged -= UpdateHP;
-        GameEvents.OnWaveChanged -= UpdateWave;
+        UpdateGold(model.Gold.Value);
     }
 
     void UpdateGold(int amount) => goldText.text = "Gold: " + amount;
-    void UpdateHP(float hp) => hpText.text = "HP: " + hp;
-    void UpdateWave(int wave) => waveText.text = "Wave: " + wave;
+    // void UpdateHP(float hp) => hpText.text = "HP: " + hp;
+    // void UpdateWave(int wave) => waveText.text = "Wave: " + wave;
+}
+
+public class UIManagerPresenter : Presenter<UIManagerModel>
+{
+
+}
+
+public class UIManagerModel : Model
+{
+    public ReactiveProperty<int> Gold => Managers.State.Resource.Gold;
 }

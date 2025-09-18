@@ -13,7 +13,7 @@ public class BuildingResource : MonoBehaviour
         if (timer >= resourceInterval)
         {
             timer = 0f;
-            ResourceManager.AddGold(resourcePerTick);
+            // ResourceManager.AddGold(resourcePerTick);
         }
     }
 }

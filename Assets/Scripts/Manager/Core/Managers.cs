@@ -5,14 +5,28 @@ using UnityEngine;
 
 public class Managers : GlobalSingleton<Managers>
 {
-    public static Core.ResourceManager Resource { get; } = new ();
-    public static Core.DataManager Data { get; } = new ();
+    public static Core.ResourceManager Resource { get; } = new ();  // 리소스 관리
+    public static Core.DataManager Data { get; } = new ();  // 테이블 데이터
+    public static Core.StateManager State { get; } = new ();  // 유저 데이터
 
     // MonoBehaviour
     public static Pooling Pool { get { return Pooling.Instance; } }
     public static MapManager Map { get { return MapManager.Instance; } }
     public static InputManager Input { get { return InputManager.Instance; } }
     public static TimeManager Time { get { return TimeManager.Instance; } }
+
+    private static UIManager ui;
+    public static UIManager UI
+    {
+        get
+        {
+            if (ui == null)
+            {
+                ui = FindFirstObjectByType<UIManager>();
+            }
+            return ui;
+        }
+    }
 
     void Awake()
     {
@@ -32,6 +46,8 @@ public class Managers : GlobalSingleton<Managers>
 
         Input.Init();
         await Map.Init();
+
+        UI.Init();
     }
 
     

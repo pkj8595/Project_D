@@ -8,10 +8,5 @@ public class Gold : MonoBehaviour
     void Start()
     {
         stats = GetComponent<UnitStats>();
-        stats.OnDeath += () =>
-        {
-            ResourceManager.AddGold(10);
-            Destroy(gameObject);
-        };
     }
 }

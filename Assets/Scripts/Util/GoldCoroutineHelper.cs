@@ -3,7 +3,7 @@ using UnityEngine;
 
 // 코루틴 관리하기 위한 클래스
 // Ex) 스킬 코루틴만 모두 정지하고 싶으면, SkillCoroutineHelper 클래스 생성 및 Start 후, StopAll하면 됨
-public class CoroutineHelper : GlobalSingleton<CoroutineHelper>
+public class GoldCoroutineHelper : GlobalSingleton<GoldCoroutineHelper>
 {
     private static MonoBehaviour monoInstance;
 

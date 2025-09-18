@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // 해당 클래스를 상속받은 클래스의 Instance를 호출하면 자동으로 전역 싱글턴 패턴으로 게임 오브젝트 생성
@@ -30,5 +28,34 @@ public class GlobalSingleton<T> : MonoBehaviour where T : MonoBehaviour
     protected void OnDestroy()
     {
         IsDestroyed = true;
+    }
+}
+
+
+public class LocalSingleton<T> : MonoBehaviour where T : MonoBehaviour
+{
+    protected static T instance = null;
+    public static T Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindFirstObjectByType<T>();
+            }
+            return instance;
+        }
+    }
+}
+
+public class Singleton<T> where T : class, new()
+{
+    protected static T instance = null;
+    public static T Instance
+    {
+        get
+        {
+            return instance ??= new T();
+        }
     }
 }

@@ -73,7 +73,7 @@ public class MapManager : LocalSingleton<MapManager>
     public async UniTask Init()
     {
         // 플레이어 타워
-        var playerTower = await Managers.Pool.Get(nameof(PlayerTower));
+        var playerTower = await Managers.Pool.Get("PlayerTower");
         var playerTowerController = playerTower.GetComponent<PlayerTower>();
         playerTowerController.Init(CellToWorld(new Vector2Int(0, 0)));
 
@@ -82,7 +82,19 @@ public class MapManager : LocalSingleton<MapManager>
         PlayerController = player.GetComponent<PlayerController>();
         PlayerController.Init(CellToWorld(new Vector2Int(0, 0)));
 
-        await SpawnEnemy();
+        // 자원 생성 - GoldTower
+        Vector2Int[] resourceCellPositions = new Vector2Int[] {
+            new Vector2Int(-2, 0),
+        };
+        foreach (var position in resourceCellPositions)
+        {
+            var resource = await Managers.Pool.Get("GoldTower");
+            var resourceController = resource.GetComponent<GoldTower>();
+            resourceController.Init(CellToWorld(position));
+        }
+
+        // 적 생성
+        SpawnEnemy().Forget(Debug.LogError);
     }
     /// <summary>
     /// 적 생성 (테스트용)

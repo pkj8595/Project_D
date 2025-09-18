@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
         stats = GetComponent<UnitStats>();
         stats.OnDeath += () =>
         {
-            ResourceManager.AddGold(10);
+            // ResourceManager.AddGold(10);
             Destroy(gameObject);
         };
 

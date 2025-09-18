@@ -11,8 +11,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         stats = GetComponent<UnitStats>();
-        stats.OnHPChanged += hp => GameEvents.OnPlayerHPChanged?.Invoke(hp);
-        stats.OnDeath += () => GameEvents.OnPlayerDeath?.Invoke();
 
         moveable = GetComponent<Moveable>();
         Managers.Input.OnRightClickUp += OnRightClickUp;
