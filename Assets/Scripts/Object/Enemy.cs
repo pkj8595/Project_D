@@ -12,11 +12,11 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         stats = GetComponent<UnitStats>();
-        stats.OnDeath += () =>
-        {
-            // ResourceManager.AddGold(10);
-            Destroy(gameObject);
-        };
+        // stats.OnDeath += () =>
+        // {
+        //     // ResourceManager.AddGold(10);
+        //     Destroy(gameObject);
+        // };
 
         moveable = GetComponent<Moveable>();
         Managers.Time.OnUpdate += UpdateProcess;
@@ -35,21 +35,6 @@ public class Enemy : MonoBehaviour
             moveable.TargetPos = target.position;
         }
     }
-
-    // void Update()
-    // {
-    //     if (target != null)
-    //         transform.position = Vector3.MoveTowards(transform.position, target.position, stats[StatType.MoveSpeed] * Time.deltaTime);
-    // }
-
-    // void OnCollisionEnter(Collision collision)
-    // {
-    //     if (collision.transform.CompareTag("Player"))
-    //     {
-    //         collision.transform.GetComponent<UnitStats>().TakeDamage(stats[StatType.Attack]);
-    //         Destroy(gameObject);
-    //     }
-    // }
 
     private void OnDestroy()
     {

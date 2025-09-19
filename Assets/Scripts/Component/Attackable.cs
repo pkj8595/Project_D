@@ -1,18 +1,18 @@
 using UnityEngine;
 
 [RequireComponent(typeof(UnitStats))]
-public class BuildingBase : MonoBehaviour
+public class Attackable : MonoBehaviour, IAttackable
 {
     private UnitStats stats;
 
     void Awake()
     {
         stats = GetComponent<UnitStats>();
-        // stats.OnDeath += OnDestroyed;
     }
 
-    // void OnDestroyed()
-    // {
-    //     Destroy(gameObject);
-    // }
+    
+    public void Attack()
+    {
+
+    }
 }

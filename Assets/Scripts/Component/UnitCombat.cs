@@ -34,7 +34,7 @@ public class UnitCombat : MonoBehaviour
             var targetStats = targets[0].GetComponent<UnitStats>();
             if (targetStats != null)
             {
-                targetStats.TakeDamage(stats[StatType.Attack]);
+                // targetStats.TakeDamage(stats[StatType.Attack]);
             }
         }
     }

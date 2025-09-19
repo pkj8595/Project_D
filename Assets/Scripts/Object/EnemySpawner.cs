@@ -15,8 +15,8 @@ public class EnemySpawner : MonoBehaviour
     void Awake()
     {
         stats = GetComponent<UnitStats>();
-        if (stats != null)
-            stats.OnDeath += OnSpawnerDestroyed;
+        // if (stats != null)
+        //     stats.OnDeath += OnSpawnerDestroyed;
     }
 
     void Update()

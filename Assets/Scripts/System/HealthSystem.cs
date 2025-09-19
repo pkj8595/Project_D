@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// HP 시스템 (Ex: 캐릭터 오브젝트의 HP 등)
 /// </summary>
-public class HealthSystem : MonoBehaviour
+public class HealthSystem
 {
     private float curHp;
     public float CurHp

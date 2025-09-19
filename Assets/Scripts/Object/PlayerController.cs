@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     private void OnRightClickUp()
     {
         if (moveable != null)
-            moveable.TargetPos = Managers.Map.ScreenToWorld(Input.mousePosition);
+            moveable.TargetPos = Managers.Map.Grid.ScreenToWorld(Input.mousePosition);
     }
 
     private void OnDestroy()

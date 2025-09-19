@@ -14,19 +14,9 @@ public class Managers : GlobalSingleton<Managers>
     public static MapManager Map { get { return MapManager.Instance; } }
     public static InputManager Input { get { return InputManager.Instance; } }
     public static TimeManager Time { get { return TimeManager.Instance; } }
+    public static UIManager UI { get { return UIManager.Instance; } }
 
-    private static UIManager ui;
-    public static UIManager UI
-    {
-        get
-        {
-            if (ui == null)
-            {
-                ui = FindFirstObjectByType<UIManager>();
-            }
-            return ui;
-        }
-    }
+    
 
     void Awake()
     {

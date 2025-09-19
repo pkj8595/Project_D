@@ -25,8 +25,8 @@ public class Projectile : MonoBehaviour
 
         if (Vector3.Distance(transform.position, target.position) < 0.1f)
         {
-            if (target.TryGetComponent<UnitStats>(out var targetStats))
-                targetStats.TakeDamage(damage);
+            // if (target.TryGetComponent<UnitStats>(out var targetStats))
+            //     targetStats.TakeDamage(damage);
 
             Destroy(gameObject);
         }

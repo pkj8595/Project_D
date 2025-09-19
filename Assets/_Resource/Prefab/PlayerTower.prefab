@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8153925294726916644}
   - component: {fileID: 2998134549943996839}
   - component: {fileID: -8012059954288333225}
+  - component: {fileID: 5703658854885668819}
   m_Layer: 0
   m_Name: PlayerTower
   m_TagString: Untagged
@@ -123,3 +124,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef3aaf2fe523cb64d9842b1d1bf2a309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTower
+--- !u!114 &5703658854885668819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7754477567610126929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c88da89cafa074d818f0bf6ccaf7f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Attackable
