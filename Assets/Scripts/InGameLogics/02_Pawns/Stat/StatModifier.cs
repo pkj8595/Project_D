@@ -20,6 +20,6 @@ public class StatModifier
         ModType = modType;
     }
 
-    public override string ToString() => $"{Type} {ModType} {Value}";
+    public override string ToString() => $"{Type} {ModType} : {Value}";
 
 }

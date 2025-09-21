@@ -2,13 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-/*
-============================================================
-* NEW: StatType.cs (Enum)
-- 게임에서 사용될 모든 스탯의 종류를 열거형(enum)으로 정의합니다.
-- 문자열 대신 이 enum을 사용하여 스탯을 관리함으로써 타입 안정성과 편의성을 확보합니다.
-============================================================
-*/
+
 public enum StatType
 {
     Hp,
@@ -20,12 +14,7 @@ public enum StatType
     Count
 }
 
-/*
-============================================================
-1. Stat.cs (MODIFIED)
-- 기존의 string key를 StatType enum으로 변경했습니다.
-============================================================
-*/
+
 [System.Serializable]
 public class Stat
 {
@@ -33,57 +22,24 @@ public class Stat
     public float value;
 }
 
-/*
-============================================================
-2. BuildingComponentData.cs (추상 클래스)
-- (변경 없음)
-============================================================
-*/
-public abstract class BuildingComponentData : ScriptableObject
-{
-    public string componentName;
-}
 
-/*
-============================================================
-3. BuildingData.cs (MODIFIED)
-- 건물의 기본 스탯(체력, 비용 등)을 새로운 Stat 시스템으로 관리하도록 변경했습니다.
-============================================================
-*/
 [CreateAssetMenu(fileName = "New Building Data", menuName = "Game Data/Building")]
 public class BuildingData : ScriptableObject
 {
     [Header("기본 정보")]
     public string buildingName;
+    public string buildingDescription;
     public Sprite icon;
     public GameObject prefab;
 
     [Header("기본 스탯")]
     public List<Stat> baseStats;
 
-    [Header("조립할 부품 데이터 목록")]
-    public List<BuildingComponentData> components;
-
-    // 특정 타입의 컴포넌트 데이터를 쉽게 찾기 위한 헬퍼 함수
-    public T GetComponentData<T>() where T : BuildingComponentData
-    {
-        return components.OfType<T>().FirstOrDefault();
-    }
-
-    // 특정 스탯의 기본값을 쉽게 찾기 위한 헬퍼 함수
-    public float GetBaseStatValue(StatType type)
-    {
-        var stat = baseStats.FirstOrDefault(s => s.type == type);
-        return stat != null ? stat.value : 0f;
-    }
+    [Header("업그레이드 정보")]
+    public UpgradeData nextUpgrade; // 다음 단계 업그레이드 타워 데이터 (없으면 null)
 }
 
-/*
-============================================================
-4. EnemyData.cs (MODIFIED)
-- 적의 스탯을 새로운 Stat 시스템으로 관리하도록 변경했습니다.
-============================================================
-*/
+
 [CreateAssetMenu(fileName = "New Enemy Data", menuName = "Game Data/Enemy")]
 public class EnemyData : ScriptableObject
 {
@@ -94,40 +50,27 @@ public class EnemyData : ScriptableObject
     [Header("기본 스탯")]
     public List<Stat> baseStats;
 
-    // 특정 스탯의 기본값을 쉽게 찾기 위한 헬퍼 함수
-    public float GetBaseStatValue(StatType type)
-    {
-        var stat = baseStats.FirstOrDefault(s => s.type == type);
-        return stat != null ? stat.value : 0f;
-    }
 }
-
-/*
-============================================================
-5. UpgradeData.cs (MODIFIED)
-- StatModifier가 string key 대신 StatType enum을 사용하도록 변경했습니다.
-============================================================
-*/
 
 
 [CreateAssetMenu(fileName = "New Upgrade Data", menuName = "Game Data/Upgrade")]
 public class UpgradeData : ScriptableObject
 {
+    public enum UpgradeType { UpgradeBuilding, UpgradeStat, }
     [Header("기본 정보")]
     public string upgradeName;
     [TextArea] public string description;
     public Sprite icon;
+    public UpgradeType upgradeType;
 
-    [Header("업그레이드 효과")]
+    [Header("UpgradeStat 업그레이드 효과")]
     public List<StatModifier> modifiers;
+
+    [Header("UpgradeBuilding 업그레이드 효과")]
+    public List<BuildingData> upgradeBuilding;
 }
 
-/*
-============================================================
-6. CardData.cs
-- (변경 없음)
-============================================================
-*/
+
 [CreateAssetMenu(fileName = "New Card Data", menuName = "Game Data/Card")]
 public class CardData : ScriptableObject
 {
@@ -147,12 +90,7 @@ public class CardData : ScriptableObject
     public UpgradeData upgradeData;
 }
 
-/*
-============================================================
-7. DeckData.cs
-- (변경 없음)
-============================================================
-*/
+
 [System.Serializable]
 public class CardChance
 {
@@ -162,12 +100,11 @@ public class CardChance
 }
 
 [CreateAssetMenu(fileName = "New Deck Data", menuName = "Game Data/Deck")]
-public class DeckData : ScriptableObject
+public class CardPoolData : ScriptableObject
 {
     [Header("이 덱에 포함될 카드 목록과 가중치")]
     public List<CardChance> cardPool;
 
-    // 가중치를 기반으로 랜덤하게 카드 하나를 뽑는 함수
     public CardData DrawCard()
     {
         if (cardPool == null || cardPool.Count == 0) return null;
@@ -193,4 +130,59 @@ public class DeckData : ScriptableObject
         }
         return cardPool.Last().card;
     }
+}
+
+
+public enum ResourceType { Wood, Mineral } // 자원 종류 Enum
+
+[System.Serializable]
+public class ResourceCost
+{
+    public ResourceType type;
+    public int amount;
+}
+
+
+/// <summary>
+/// 인 게임 셋팅 데이터
+/// </summary>
+[CreateAssetMenu(fileName = "New InGame Data", menuName = "Game Data/InGame")]
+public class InGameData : ScriptableObject
+{
+    [Header("인 게임 셋팅의 기본이 되는 waveData")]
+    public WaveEventData defultWave;
+    [Header("wave 중 발생하는 이벤트 데이터")]
+    public List<WaveEventData> waves;
+
+    [Header("플레이어가 초기에 소유한 카드 풀")]
+    public CardPoolData startingPool;
+
+    [Header("게임 중 획득/선택 가능한 모든 카드 풀")]
+    [Tooltip("플레이어는 이 목록에 있는 카드 풀 중에서 선택하여 카드를 뽑게 됩니다.")]
+    public List<CardPoolData> availablePools;
+
+}
+
+/// <summary>
+/// 인 게임 시작시 발생하는 이벤트 데이터
+/// 일단 몬스터의 스폰이 추가되는 방식
+/// </summary>
+[CreateAssetMenu(fileName = "New Wave Data", menuName = "Game Data/Wave")]
+public class WaveEventData : ScriptableObject
+{
+    public float startEventTime;
+    public float endEventTime;
+    public List<EnemyData> enemies;
+    public float waveStatMod;
+    public float waveStatConst;
+
+    /// <summary>
+    /// 시간당 몬스터 스폰 간격
+    /// </summary>
+    public float waveIntervalConst;
+
+    /// <summary>
+    /// 시간당 몬스터 스폰 간격 증가 값
+    /// </summary>
+    public float waveIntervalMod;
 }
