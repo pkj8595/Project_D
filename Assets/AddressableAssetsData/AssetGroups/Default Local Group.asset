@@ -26,6 +26,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Sprite
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 928f38fe298cff947b9cfac17de6f620
+    m_Address: Assets/_SO
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SO
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c1c4945007cb9074f9a691e0eafcfcdf
     m_Address: Assets/_Resource/Prefab
     m_ReadOnly: 0
