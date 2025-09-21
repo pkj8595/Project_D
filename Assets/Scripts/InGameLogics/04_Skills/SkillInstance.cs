@@ -28,7 +28,7 @@ namespace InGameLogics.Skill
             _owner = owner;
             _skillBaseData = skillData;
             _skillStat = new SkillStat(skillData.skillBaseStat, owner);
-            _skillAction = new SkillAction(skillData.skillAction.modules, null);
+            _skillAction = new SkillAction(skillData.skillAugments);
             FirePoint = owner.FirePoint;
         }
 

@@ -24,13 +24,16 @@ namespace InGameLogics.Skill
 
         bool _isDirty = false;
 
-        public SkillAction(IList<SOSkillActionModule> baseModules, IList<SOSkillActionModule> addedModules)
+        public SkillAction(SOSkillAugment[] skillAug)
         {
-            if (baseModules != null)
-                _baseModules.AddRange(baseModules);
-            if (addedModules != null)
-                _addedModules.AddRange(addedModules);
+            _baseModules.Clear();
+            foreach (SOSkillAugment aug in skillAug)
+            {
+                if (aug.SkillActionModules != null)
+                    _baseModules.AddRange(aug.SkillActionModules);
+            }
 
+            _addedModules.Clear();
             _isDirty = true;
         }
 

@@ -1,21 +1,28 @@
+using Const;
 using InGameLogics.Skill;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public interface ISkillTargetingCondition
 {
-    GameObject FindTarget(SkillInstance skillInstance);
+    IEnumerable<GameObject> FindTarget(SkillInstance skillInstance);
     
 }
 
-public class ClosestEnemyInRange : ISkillTargetingCondition
+public class ClosestEnemyInRange : SOTargetFinder, ISkillTargetingCondition
 {
-    public GameObject FindTarget(SkillInstance instance)
+    public IEnumerable<GameObject> FindTarget(SkillInstance instance)
     {
         float range = instance.SkillStat[ESkillStat.range];
         IPawnBase owner = instance.Owner;
+        Vector2 origin = new (owner.GetTransform.position.x, owner.GetTransform.position.y);
 
+        int layer = (int)ELayer.Unit;
+        Collider[] results = new Collider[10];
+        Physics.OverlapSphereNonAlloc(owner.GetTransform.position, range, results, layer);
 
-        //Collider[] hitColliders = Physics2D.OverlapCircleAll(owner.FirePoint.position, range);
-        return null;
+        return results.Where(x => x != null).Select(x => x.gameObject);
     }
 }
