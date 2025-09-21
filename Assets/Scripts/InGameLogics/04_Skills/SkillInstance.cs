@@ -8,7 +8,7 @@ namespace InGameLogics.Skill
     public class SkillInstance
     {
         private IPawnBase _owner;
-        private SOSkill _skillBaseData; 
+        private SOSkill _skillBaseData;
         private SkillStat _skillStat;
         private SkillAction _skillAction;
 

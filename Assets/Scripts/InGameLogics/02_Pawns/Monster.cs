@@ -25,7 +25,7 @@ public class Monster : MonoBehaviour, IPawnBase
 
     void Update()
     {
-        if (IsDead) 
+        if (IsDead)
             return;
 
         transform.position += StatContainer.Stat[EStatType.MoveSpeed] * Time.deltaTime * Vector3.down;
@@ -52,7 +52,6 @@ public class Monster : MonoBehaviour, IPawnBase
         {
             IsDead = true;
             OnDeadAction?.Invoke();
-            InGameScene.Instance.RemoveMonster(InstanceId);
             Destroy(gameObject);
         }
     }

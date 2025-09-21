@@ -3,10 +3,10 @@ using System.Linq;
 
 namespace InGameLogics.Skill
 {
-    public class SkillAction 
+    public class SkillAction
     {
-        private List<SOSkillActionModule> _baseModules = new ();
-        private List<SOSkillActionModule> _addedModules = new ();
+        private List<SOSkillActionModule> _baseModules = new();
+        private List<SOSkillActionModule> _addedModules = new();
 
         private List<IOnExecute> _onExecute = new();
         private List<IOnHit> _onHitModules = new();
@@ -24,7 +24,7 @@ namespace InGameLogics.Skill
 
         bool _isDirty = false;
 
-        public SkillAction (IList<SOSkillActionModule> baseModules, IList<SOSkillActionModule> addedModules)
+        public SkillAction(IList<SOSkillActionModule> baseModules, IList<SOSkillActionModule> addedModules)
         {
             if (baseModules != null)
                 _baseModules.AddRange(baseModules);

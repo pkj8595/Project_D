@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class BuildingController : MonoBehaviour
 {
-    public bool TryPlaceBuilding(string buildingId, Vector3 position) 
+    public bool TryPlaceBuilding(string buildingId, Vector3 position)
     {
         return false;
     }

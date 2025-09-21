@@ -8,4 +8,3 @@ public class SOSkill : ScriptableObject
     public SOSkillActions skillAction;
     public SOSkillAugment[] skillAugments;
 }
-  

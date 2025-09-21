@@ -18,5 +18,5 @@ public class UpgradeData : SOBase
     public List<StatModifier> modifiers;
 
     [Header("UpgradeBuilding 업그레이드 효과")]
-    public List<BuildingData> upgradeBuilding;
+    public BuildingData upgradeBuilding;
 }
