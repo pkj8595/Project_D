@@ -19,14 +19,22 @@ public class TimeManager : GlobalSingleton<TimeManager>
 
     public bool IsPaused { get; private set; }
 
+    /// <summary>
+    /// 현재 게임 진행 시간 (초)
+    /// </summary>
+    public float Timer { get; private set; }
+
     public void Awake()
     {
         ClearTimeScale();
+        Timer = 0f;
     }
 
     public void Update()
     {
         if (IsPaused) return;
+
+        Timer += Time.deltaTime;    // 게임 시간 같은 경우는 TimeScale이 0일땐 증가하면 안됨
 
         // 업데이트 주기(기본 0.02초)를 기준으로 커스텀 업데이트를 실행할지 결정합니다.
         float tickInterval = Time.unscaledDeltaTime;
