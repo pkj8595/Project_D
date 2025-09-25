@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95fc67477e0af304397aa1924a542e1d, type: 3}
   m_Name: BuildingData_1
   m_EditorClassIdentifier: Assembly-CSharp::BuildingData
-  buildingName: 
-  buildingDescription: 
+  buildingName: "\uC790\uC6D0\uD0C0\uC6CC"
+  buildingDescription: "\uC77C\uC815 \uC2DC\uAC04\uB9C8\uB2E4 \uC790\uC6D0\uC744
+    \uD68D\uB4DD\uD55C\uB2E4."
   icon: {fileID: 0}
   prefab: {fileID: 0}
   baseStats: []

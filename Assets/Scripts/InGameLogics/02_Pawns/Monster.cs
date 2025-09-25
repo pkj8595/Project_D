@@ -29,7 +29,7 @@ public class Monster : MonoBehaviour, IPawnBase
             return;
 
         transform.position += StatContainer.Stat[EStatType.MoveSpeed] * Time.deltaTime * Vector3.down;
-        SkillContainer.OnUpdate(Time.deltaTime);
+        //SkillContainer.OnUpdate(Time.deltaTime);
     }
 
     public void Init(int monsterID, int instanceId)

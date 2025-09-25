@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "skill_", menuName = "ScriptableObjects/skill", order = 1)]
-public class SOSkillAugment : ScriptableObject
+public class SOSkillAugment : SOBase
 {
     public string SkillName;
     public string SkillDescription;
