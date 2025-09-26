@@ -34,8 +34,6 @@ public class TimeManager : GlobalSingleton<TimeManager>
     {
         if (IsPaused) return;
 
-        Timer += Time.deltaTime;    // 게임 시간 같은 경우는 TimeScale이 0일땐 증가하면 안됨
-
         // 업데이트 주기(기본 0.02초)를 기준으로 커스텀 업데이트를 실행할지 결정합니다.
         float tickInterval = Time.unscaledDeltaTime;
         // Debug.Log($"TickInterval: {tickInterval}");
@@ -43,6 +41,9 @@ public class TimeManager : GlobalSingleton<TimeManager>
         // 현재 시간 배율에 맞게 unscaledDeltaTime을 누적합니다.
         _timeAccumulator += tickInterval * CurrentTimeScale;
         // Debug.Log($"TimeAccumulator: {_timeAccumulator}");
+
+        // 게임 시간
+        Timer += _timeAccumulator;
 
         if (_timeAccumulator >= tickInterval)
         {

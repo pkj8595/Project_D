@@ -1,12 +1,12 @@
 using UnityEngine;
 
-[RequireComponent(typeof(UnitStats))]
+[RequireComponent(typeof(GridObject))]
 public class Moveable : MonoBehaviour, IMoveable
 {
-    private UnitStats stats;
+    private GridObject gridObject;
     private void Awake()
     {
-        stats = GetComponent<UnitStats>();
+        gridObject = GetComponent<GridObject>();
     }
     private void Start()
     {
@@ -17,6 +17,12 @@ public class Moveable : MonoBehaviour, IMoveable
     public Vector2 TargetPos { get; set; }
     public void Move()
     {
-        transform.position = Vector2.MoveTowards(transform.position, TargetPos, stats[StatType.MoveSpeed] * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, TargetPos, gridObject.StatContainer.Stat[EStatType.MoveSpeed] * Time.deltaTime);
+    }
+
+    private void OnDestroy()
+    {
+        if (!Managers.Time.IsDestroyed)
+            Managers.Time.OnUpdate -= Move;
     }
 }

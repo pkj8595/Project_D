@@ -12,19 +12,21 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Wave Data", menuName = "Game Data/Wave")]
 public class WaveEventData : SOBase
 {
-    public float startEventTime;
-    public float endEventTime;
+    public float startEventTime = 0f;
+    public float endEventTime = 0f;
     public List<EnemyData> enemies;
-    public float waveStatMod;
-    public float waveStatConst;
 
     /// <summary>
-    /// 시간당 몬스터 스폰 간격
+    /// 몬스터 스탯 고정 증가 값
     /// </summary>
-    public float waveIntervalConst;
+    public float waveStatConst = 1f;
+    /// <summary>
+    /// 스폰당 몬스터 스탯 추가 증가 값
+    /// </summary>
+    public float waveStatMod = 0f;    
 
     /// <summary>
-    /// 시간당 몬스터 스폰 간격 증가 값
+    /// 몬스터 스폰 간격
     /// </summary>
-    public float waveIntervalMod;
+    public float waveIntervalConst = 1f;
 }

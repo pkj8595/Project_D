@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0818c505e640674b94c43b71ceaf9b6, type: 3}
   m_Name: InGame_1
   m_EditorClassIdentifier: Assembly-CSharp::InGameData
-  defultWave: {fileID: 11400000, guid: fdaef038a19765547807ec7e0f4c2ab4, type: 2}
-  waves: []
-  startingPool: {fileID: 0}
-  availablePools: []
+  defaultWave: {fileID: 11400000, guid: f1e5af5fd88991842af0d10f776d41f6, type: 2}
+  waves:
+  - {fileID: 11400000, guid: fdaef038a19765547807ec7e0f4c2ab4, type: 2}
+  startingCardPool: {fileID: 0}
+  availableCardPools: []

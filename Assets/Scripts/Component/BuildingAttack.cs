@@ -6,13 +6,7 @@ public class BuildingAttack : MonoBehaviour
     public float attackInterval = 1f;
     public LayerMask targetLayer;
 
-    private UnitStats stats;
     private float timer;
-
-    void Awake()
-    {
-        stats = GetComponent<UnitStats>();
-    }
 
     void Update()
     {

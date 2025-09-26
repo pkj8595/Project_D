@@ -3,15 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-
-public enum EStatType
-{
-    Attack,
-    MaxHP,
-    MoveSpeed,
-    Count
-}
-
 public interface IPawnStat
 {
     public float[] Stats { get; set; }

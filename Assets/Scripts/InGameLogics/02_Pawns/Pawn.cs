@@ -22,7 +22,7 @@ public class Pawn : MonoBehaviour, IPawnBase
 
     void Awake()
     {
-        _pawnStat.Init();
+        // _pawnStat.Init();
         StatContainer = new StatContainer(_pawnStat, this);
         SkillContainer = new SkillContainer(this);
     }

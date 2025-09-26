@@ -1,23 +1,29 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 플레이어, 적 등 스탯 데이터 클래스
+/// </summary>
 public class PawnStat : IPawnStat
 {
     public float[] Stats { get; set; }
 
+    public PawnStat()
+    {
+        Stats = new float[(int)EStatType.Count];
+    }
+    public PawnStat(List<Stat> baseStats)
+    {
+        Stats = new float[(int)EStatType.Count];
+        foreach (var stat in baseStats)
+        {
+            Stats[(int)stat.type] = stat.value;
+        }
+    }
+
     public void AddStat(EStatType type, float value)
     {
         Stats[(int)type] += value;
-    }
-
-    internal void Init()
-    {
-        if (Stats == null || Stats.Length == 0)
-        {
-            Stats = new float[(int)EStatType.Count];
-            Stats[(int)EStatType.Attack] = 10f;
-            Stats[(int)EStatType.MaxHP] = 100f;
-            Stats[(int)EStatType.MoveSpeed] = 3f;
-        }
     }
 }

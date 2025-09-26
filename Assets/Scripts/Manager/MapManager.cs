@@ -12,6 +12,11 @@ public class MapManager : LocalSingleton<MapManager>
     public Grid Grid => grid;
     #endregion
 
+    #region EnemySpawner
+    [SerializeField] private EnemySpawner enemySpawner;
+    public EnemySpawner EnemySpawner => enemySpawner;
+    #endregion
+
     #region Map
     public PlayerController PlayerController { get; private set; }
     public async UniTask Init()
@@ -19,12 +24,18 @@ public class MapManager : LocalSingleton<MapManager>
         // 플레이어 타워
         var playerTower = await Managers.Pool.Get("PlayerTower");
         var playerTowerController = playerTower.GetComponent<PlayerTower>();
-        playerTowerController.Init(grid.CellToWorld(new Vector2Int(0, 0)));
+
+        var baseStats = new List<Stat>();
+        // TODO: 플레이어 타워 스탯 추가
+        playerTowerController.Init(baseStats, grid.CellToWorld(new Vector2Int(0, 0)));
 
         // 플레이어
         var player = await Managers.Pool.Get("Player");
         PlayerController = player.GetComponent<PlayerController>();
-        PlayerController.Init(grid.CellToWorld(new Vector2Int(0, 0)));
+
+        baseStats = new List<Stat>();
+        baseStats.Add(new Stat { type = EStatType.MoveSpeed, value = 2 });  // 이동속도 추가
+        PlayerController.Init(baseStats, grid.CellToWorld(new Vector2Int(0, 0)));
 
         // 자원 생성 - GoldTower
         Vector2Int[] resourceCellPositions = new Vector2Int[] {
@@ -34,31 +45,15 @@ public class MapManager : LocalSingleton<MapManager>
         {
             var resource = await Managers.Pool.Get("GoldTower");
             var resourceController = resource.GetComponent<GoldTower>();
-            resourceController.Init(grid.CellToWorld(position));
+
+            baseStats = new List<Stat>();
+            // TODO: 자원 타워 스탯 추가
+            resourceController.Init(baseStats, grid.CellToWorld(position));
         }
 
         // 적 생성
-        SpawnEnemy().Forget(Debug.LogError);
+        enemySpawner.Init();
     }
-    /// <summary>
-    /// 적 생성 (테스트용)
-    /// </summary>
-    /// <returns></returns>
-    private async UniTask SpawnEnemy()
-    {
-        while (true)
-        // for (int i = 0; i < 1000; i++)
-        {
-            var enemy = await Managers.Pool.Get("Enemy");
-            var enemyController = enemy.GetComponent<Enemy>();
-            
-            var viewportPosY = Random.Range(0f-0.1f, 1f+0.1f);
-            var viewportPosX = viewportPosY >= 0f && viewportPosY <= 1f ? (Random.Range(0, 1+1) == 0 ? 0f-0.1f : 1f+0.1f) : Random.Range(0f-0.1f, 1f+0.1f);
-            var initPos = Camera.main.ViewportToWorldPoint(new Vector2(viewportPosX, viewportPosY));
-            enemyController.Init(initPos);
-
-            await UniTask.Delay(TimeSpan.FromSeconds(1f));
-        }
-    }
+    
     #endregion
 }

@@ -11,7 +11,7 @@ using UnityEngine;
 public class InGameData : SOBase
 {
     [Header("인 게임 셋팅의 기본이 되는 waveData")]
-    public WaveEventData defultWave;
+    public WaveEventData defaultWave;
     [Header("wave 중 발생하는 이벤트 데이터")]
     public List<WaveEventData> waves;
 

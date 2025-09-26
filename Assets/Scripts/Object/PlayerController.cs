@@ -1,24 +1,19 @@
-using Unity.VisualScripting;
-using UnityEditor;
+using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(UnitStats))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : GridObject
 {
-    private UnitStats stats;
     private Moveable moveable;
 
     private void Awake()
     {
-        stats = GetComponent<UnitStats>();
-
         moveable = GetComponent<Moveable>();
         Managers.Input.OnRightClickUp += OnRightClickUp;
     }
 
-    public void Init(Vector2 initPos)
+    public override void Init(List<Stat> baseStats, Vector2 initPos)
     {
-        transform.position = initPos;
+        base.Init(baseStats, initPos);
 
         if (moveable != null)
             moveable.TargetPos = initPos;
@@ -32,8 +27,10 @@ public class PlayerController : MonoBehaviour
             moveable.TargetPos = Managers.Map.Grid.ScreenToWorld(Input.mousePosition);
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+
         if (!Managers.Input.IsDestroyed)
             Managers.Input.OnRightClickUp -= OnRightClickUp;
     }

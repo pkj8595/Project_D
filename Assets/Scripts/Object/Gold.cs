@@ -1,12 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(UnitStats))]
-public class Gold : MonoBehaviour
+public class Gold : GridObject
 {
-    private UnitStats stats;
-
-    void Start()
-    {
-        stats = GetComponent<UnitStats>();
-    }
 }

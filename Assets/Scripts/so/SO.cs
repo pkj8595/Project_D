@@ -2,10 +2,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-
-public enum StatType
+public enum EStatType
 {
-    Hp,
+    MaxHP,
     Attack,
     Defense,
     MoveSpeed,
@@ -17,7 +16,7 @@ public enum StatType
 [System.Serializable]
 public class Stat
 {
-    public StatType type;
+    public EStatType type;
     public float value;
 }
 

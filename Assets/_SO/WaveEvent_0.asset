@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5835ab2deb7f34944997530b069ab4ad, type: 3}
-  m_Name: WaveEvent_1
+  m_Name: WaveEvent_0
   m_EditorClassIdentifier: Assembly-CSharp::WaveEventData
-  startEventTime: 10
-  endEventTime: 22
+  startEventTime: 0
+  endEventTime: 1800
   enemies:
   - {fileID: 11400000, guid: f4c4e58be10999d42ad09bca3ec87f93, type: 2}
   - {fileID: 11400000, guid: f4c4e58be10999d42ad09bca3ec87f93, type: 2}
   - {fileID: 11400000, guid: f4c4e58be10999d42ad09bca3ec87f93, type: 2}
+  - {fileID: 11400000, guid: f4c4e58be10999d42ad09bca3ec87f93, type: 2}
+  - {fileID: 11400000, guid: f4c4e58be10999d42ad09bca3ec87f93, type: 2}
   waveStatConst: 1
-  waveStatMod: 0.5
-  waveIntervalConst: 5
+  waveStatMod: 1
+  waveIntervalConst: 60

@@ -1,19 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-[RequireComponent(typeof(UnitStats))]
-public class GoldTower : MonoBehaviour
+public class GoldTower : GridObject
 {
-    private UnitStats stats;
-
-    void Start()
+    public override void Init(List<Stat> baseStats, Vector2 initPos)
     {
-        stats = GetComponent<UnitStats>();
-    }
-
-    public void Init(Vector2 initPos)
-    {
-        transform.position = initPos;
+        base.Init(baseStats, initPos);
 
         // 골드 증가
         if (goldCoroutine != null) GoldCoroutineHelper.StopCoroutine(goldCoroutine);
