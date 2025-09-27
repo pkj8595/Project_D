@@ -1,9 +1,13 @@
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using Consts;
 using UnityEngine;
 
 public class GridObject : MonoBehaviour
 {
+    /// <summary>
+    /// 임시로 추가
+    /// </summary>
+    [field: SerializeField] public EUnitFlags UnitFlags { get; private set; }
     /// <summary>
     /// 오브젝트 스탯
     /// </summary>

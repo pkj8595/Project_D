@@ -24,12 +24,14 @@ namespace InGameLogics
         {
             if (other.CompareTag("Pawn"))
             {
-                skill.OnHit(other.gameObject);
-
                 var pawnBase = other.GetComponent<IPawnBase>();
-                if (pawnBase != null && pawnBase.IsDead)
+                if (pawnBase != null)
                 {
-                    skill.OnKill(other.gameObject);
+                    skill.OnHit(pawnBase);
+                    if (pawnBase.IsDead)
+                    {
+                        skill.OnKill(pawnBase);
+                    }
                 }
             }
         }

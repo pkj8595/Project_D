@@ -2,19 +2,18 @@ using UnityEngine;
 using InGameLogics.Skill;
 using InGameLogics;
 using System;
+using Consts;
 
 public class Pawn : MonoBehaviour, IPawnBase
 {
+    [field: SerializeField] public EUnitFlags UnitFlags { get; private set; }
     public bool IsDead { get; private set; }
     public SkillContainer SkillContainer { get; private set; }
     public StatContainer StatContainer { get; private set; }
     public Transform GetTransform => transform;
     [field: SerializeField] public Transform FirePoint { get; private set; }
 
-    public EElementType ElementType { get; set; }
 
-    [SerializeField] private int _id;
-    //[SerializeField] private SkeletonAnimation _spine;
 
     public event Action OnDeadAction;
 
@@ -22,6 +21,16 @@ public class Pawn : MonoBehaviour, IPawnBase
     {
         StatContainer = TryGetComponent(out StatContainer statContainer) ? statContainer : null;
         SkillContainer = TryGetComponent(out SkillContainer skillContainer) ? skillContainer : null;
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SkillContainer.ExecuteSkill_Test();
+            Debug.Log(SkillContainer.ToString());
+        }
+
     }
 
     public void Dead()

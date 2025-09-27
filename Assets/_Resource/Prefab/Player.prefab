@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3173774906063359203}
   - component: {fileID: 4217131637276220753}
   - component: {fileID: -4039278919071930253}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,6 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dda39f3ffdcfa94585fe390517a3d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  <UnitFlags>k__BackingField: 0
 --- !u!114 &4217131637276220753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,18 +130,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339b374999f90634cb7dd9cf78d8727b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatContainer
-  BaseStat:
-    rid: 5069595849891774744
-  references:
-    version: 2
-    RefIds:
-    - rid: 5069595849891774744
-      type: {class: PawnStat, ns: , asm: Assembly-CSharp}
-      data:
-        <Stats>k__BackingField:
-        - 200
-        - 1
-        - 10
-        - 2
-        - 0
-        - 0
+  _baseStats: []

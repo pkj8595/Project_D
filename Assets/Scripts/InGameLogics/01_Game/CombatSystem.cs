@@ -18,8 +18,8 @@ namespace InGameLogics
         {
             if (attacker == null || taker == null || attacker.IsDead || taker.IsDead)
                 return;
-            float multiplier = GetElementalMultiplier(attacker.ElementType, taker.ElementType);
-            taker.TakeDamage(damage * multiplier);
+
+            taker.TakeDamage(damage);
         }
 
         private static float GetElementalMultiplier(EElementType attacker, EElementType taker)

@@ -38,6 +38,9 @@ namespace InGameLogics.Skill
         {
             get
             {
+                if (_owner == null || _skillBaseData == null)
+                    return false;
+
                 if (_owner.IsDead || TimeManager.Instance.Timer - LastExecuteTime >= CoolTime)
                     return false;
 
@@ -56,7 +59,7 @@ namespace InGameLogics.Skill
         {
             _owner = owner;
             _skillBaseData = skillData;
-            _skillStat = new SkillStat(skillData.skillBaseStat, owner);
+            _skillStat = new SkillStat(skillData.skillBaseStat);
             _skillAction = new SkillAction(skillData.skillAugments);
             FirePoint = owner.FirePoint;
         }
@@ -72,7 +75,8 @@ namespace InGameLogics.Skill
 
         public void RemoveAugment(SOSkillAugment augment)
         {
-            if (augment == null) return;
+            if (augment == null)
+                return;
             Augments.Remove(augment);
             _skillStat.RemoveRangeModifier(augment.SkillStatModifiers);
             _skillAction.RemoveRangeModules(augment.SkillActionModules);
@@ -80,7 +84,9 @@ namespace InGameLogics.Skill
 
         public bool TryExecute()
         {
-            if (!CanExecute) return false;
+            if (!CanExecute)
+                return false;
+            Debug.Log($"ExecuteSkill: {_skillBaseData.SkillName}");
 
             LastExecuteTime = TimeManager.Instance.Timer;
             Execute();
@@ -96,7 +102,7 @@ namespace InGameLogics.Skill
             }
         }
 
-        public void OnHit(GameObject target)
+        public void OnHit(IPawnBase target)
         {
             foreach (var onHitModules in _skillAction.OnHit)
             {
@@ -112,7 +118,7 @@ namespace InGameLogics.Skill
             }
         }
 
-        public void OnKill(GameObject target)
+        public void OnKill(IPawnBase target)
         {
             foreach (var onKillModules in _skillAction.OnKill)
             {
@@ -120,7 +126,7 @@ namespace InGameLogics.Skill
             }
         }
 
-        public void OnCrit(GameObject target)
+        public void OnCrit(IPawnBase target)
         {
             foreach (var onCritModules in _skillAction.OnCrit)
             {
@@ -134,6 +140,12 @@ namespace InGameLogics.Skill
             {
                 onSkillEndModules.OnSkillEnd(this);
             }
+        }
+
+        public override string ToString()
+        {
+            string str = $"{_skillBaseData}\nCoolTime: {CoolTime}\nNormalizedCoolTime: {NormalizedCoolTime}\nCanExecute: {CanExecute}";
+            return str;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace InGameLogics.Skill
@@ -48,8 +49,19 @@ namespace InGameLogics.Skill
             return false;
         }
 
-
-
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            int count = 0;
+            foreach (var skill in _skillInstances)
+            {
+                count++;
+                sb.AppendLine($"{count}.\n");
+                sb.AppendLine(skill.ToString());
+                sb.AppendLine("\n");
+            }
+            return sb.ToString();
+        }
 
     }
 }

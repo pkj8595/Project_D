@@ -10,17 +10,17 @@ namespace InGameLogics.Skill
 
     public interface IOnHit
     {
-        void OnHit(SkillInstance skill, GameObject target);
+        void OnHit(SkillInstance skill, IPawnBase target);
     }
 
     public interface IOnKill
     {
-        void OnKill(SkillInstance skill, GameObject target);
+        void OnKill(SkillInstance skill, IPawnBase target);
     }
 
     public interface IOnCrit
     {
-        void OnCrit(SkillInstance skill, GameObject target);
+        void OnCrit(SkillInstance skill, IPawnBase target);
     }
 
     public interface IOnSkillEnd

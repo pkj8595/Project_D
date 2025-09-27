@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1105819985531396414}
   - component: {fileID: 7274382065050454862}
   - component: {fileID: 2809148386922386548}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5724cc6e15861454ea0acab9eee3975a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  <UnitFlags>k__BackingField: 0
 --- !u!114 &1105819985531396414
 MonoBehaviour:
   m_ObjectHideFlags: 0

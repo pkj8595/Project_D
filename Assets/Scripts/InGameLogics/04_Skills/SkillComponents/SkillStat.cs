@@ -10,30 +10,21 @@ namespace InGameLogics.Skill
     public class SkillStat
     {
         private float[] _finalStat = new float[(int)ESkillStat.Count];
-        private SOSkillStat _skillStat;
-        private IPawnBase _owner;
+        //private SOSkillStat _skillStat;
+        private List<SkillStatProperty> _statProperties = new();
+        public IReadOnlyList<SkillStatProperty> StatPropertyList => _statProperties;
 
         private List<SkillStatModifier> _statModifiers = new();
         public IReadOnlyList<SkillStatModifier> StatModifierList => _statModifiers;
-        private Action<StatContainer> OnPawnStatChangedHandler;
         public float this[ESkillStat statType]
         {
             get => _finalStat[(int)statType];
             set => _finalStat[(int)statType] = value;
         }
 
-        public SkillStat(SOSkillStat skillStat, IPawnBase owner)
+        public SkillStat(List<SkillStatProperty> statProperties)
         {
-            _owner = owner;
-            _skillStat = skillStat;
-            OnPawnStatChangedHandler = (statContainer) =>
-            {
-                // 스탯 중 쿨타임이나 스킬에 직접적으로 연관을 주는 스탯이 있으면 계산 
-                // 다만 없앨 가능성도 있음
-                CalculateFinalStats();
-            };
-            owner.StatContainer.OnStatChanged -= OnPawnStatChangedHandler;
-            owner.StatContainer.OnStatChanged += OnPawnStatChangedHandler;
+            _statProperties = statProperties;
             CalculateFinalStats();
         }
 
@@ -76,9 +67,10 @@ namespace InGameLogics.Skill
         private void CalculateFinalStats()
         {
             for (int i = 0; i < (int)ESkillStat.Count; i++)
-            {
-                _finalStat[i] = _skillStat[i];
-            }
+                _finalStat[i] = 0;
+
+            foreach (var property in _statProperties)
+                _finalStat[(int)property.StatType] += property.Value;
 
             Span<float> addStatSpan = stackalloc float[(int)ESkillStat.Count];
             Span<float> multiplySpan = stackalloc float[(int)ESkillStat.Count];

@@ -53,4 +53,11 @@ namespace InGameLogics.Skill
             return $"{_statType} {_modifierType} {_value}";
         }
     }
+
+    [System.Serializable]
+    public class SkillStatProperty
+    {
+        [SerializeField] public ESkillStat StatType;
+        [SerializeField] public float Value;
+    }
 }

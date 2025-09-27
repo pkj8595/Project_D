@@ -38,6 +38,7 @@ public class StatContainer : MonoBehaviour
     {
         _baseStats.Clear();
         _baseStats.AddRange(baseStats);
+        Stat.Hp = Stat[EStatType.MaxHP];
         OnChangedStat();
     }
 

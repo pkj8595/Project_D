@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 374400238199764679}
   - component: {fileID: 8153925294726916644}
   - component: {fileID: -4518598674373706935}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GoldTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,3 +103,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cddbcf3f3b080b4c9bc9f0d7eedc60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoldTower
+  <UnitFlags>k__BackingField: 0

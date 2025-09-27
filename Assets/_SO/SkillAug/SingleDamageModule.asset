@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e464713bcb6fc7648ada14d3c1216223, type: 3}
+  m_Name: SingleDamageModule
+  m_EditorClassIdentifier: Assembly-CSharp::SOSkillAugment
+  SkillStatModifiers:
+  - _statType: 0
+    _value: 10
+    _modifierType: 0
+  SkillActionModules:
+  - rid: 5069595849891774777
+  - rid: 5069595849891774778
+  references:
+    version: 2
+    RefIds:
+    - rid: 5069595849891774777
+      type: {class: SingleTargetModule, ns: , asm: Assembly-CSharp}
+      data:
+        <Priority>k__BackingField: 1
+        <TargetType>k__BackingField: 2
+    - rid: 5069595849891774778
+      type: {class: DamageModule, ns: , asm: Assembly-CSharp}
+      data:
+        <Priority>k__BackingField: 2

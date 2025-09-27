@@ -122,7 +122,18 @@ public class EnemySpawner : MonoBehaviour
     /// <returns></returns>
     private async UniTask CreateWave(float delay, WaveEventData waveEventData)
     {
-        await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: destroyCancellationToken);
+        try
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: destroyCancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            Debug.Log("CreateWave OperationCanceledException");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e);
+        }
         var wave = new Wave(waveEventData);
     }
 }
