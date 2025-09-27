@@ -7,14 +7,11 @@ namespace InGameLogics.Skill
 {
 
     [System.Serializable]
-    public class SkillStat 
+    public class SkillStat
     {
         private float[] _finalStat = new float[(int)ESkillStat.Count];
-        private float[] _baseStat = new float[(int)ESkillStat.Count];//원본 스킬 스탯
-
-        private float _pawnAttack;
+        private SOSkillStat _skillStat;
         private IPawnBase _owner;
-
 
         private List<SkillStatModifier> _statModifiers = new();
         public IReadOnlyList<SkillStatModifier> StatModifierList => _statModifiers;
@@ -28,18 +25,15 @@ namespace InGameLogics.Skill
         public SkillStat(SOSkillStat skillStat, IPawnBase owner)
         {
             _owner = owner;
+            _skillStat = skillStat;
             OnPawnStatChangedHandler = (statContainer) =>
             {
-                _pawnAttack = statContainer.Stat[EStatType.Attack];
+                // 스탯 중 쿨타임이나 스킬에 직접적으로 연관을 주는 스탯이 있으면 계산 
+                // 다만 없앨 가능성도 있음
                 CalculateFinalStats();
             };
             owner.StatContainer.OnStatChanged -= OnPawnStatChangedHandler;
             owner.StatContainer.OnStatChanged += OnPawnStatChangedHandler;
-
-            for (int i = 0; i < (int)ESkillStat.Count; i++)
-            {
-                _baseStat[i] = skillStat.GetStat((ESkillStat)i);
-            }
             CalculateFinalStats();
         }
 
@@ -73,7 +67,7 @@ namespace InGameLogics.Skill
         {
             for (int i = 0; i < (int)ESkillStat.Count; i++)
             {
-                _finalStat[i] = _baseStat[i];
+                _finalStat[i] = _skillStat[i];
             }
 
             Span<float> addStatSpan = stackalloc float[(int)ESkillStat.Count];
@@ -86,17 +80,17 @@ namespace InGameLogics.Skill
 
                 switch (modifier.ModifierType)
                 {
-                case ESkillStatModifierType.Add:
-                    addStatSpan[index] += modifier.Value;
-                    break;
+                    case ESkillStatModifierType.Add:
+                        addStatSpan[index] += modifier.Value;
+                        break;
 
-                case ESkillStatModifierType.Multiply:
-                    multiplySpan[index] += modifier.Value;
-                    break;
+                    case ESkillStatModifierType.Multiply:
+                        multiplySpan[index] += modifier.Value;
+                        break;
 
-                case ESkillStatModifierType.Override:
-                    overrideSpan[index] = modifier.Value;
-                    break;
+                    case ESkillStatModifierType.Override:
+                        overrideSpan[index] = modifier.Value;
+                        break;
                 }
             }
 

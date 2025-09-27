@@ -5,8 +5,14 @@ using UnityEngine;
 public class SOSkillStat : SOBase
 {
     [SerializeField] private float[] baseStat = new float[(int)ESkillStat.Count];//원본 스킬 스탯
-    public float GetStat(ESkillStat statType)
+
+    public float this[ESkillStat statType]
     {
-        return baseStat[(int)statType];
+        get => baseStat[(int)statType];
+    }
+
+    public float this[int statType]
+    {
+        get => baseStat[statType];
     }
 }

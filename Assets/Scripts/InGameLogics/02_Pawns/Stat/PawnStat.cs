@@ -7,15 +7,10 @@ using UnityEngine;
 /// </summary>
 public class PawnStat : IPawnStat
 {
-    public float[] Stats { get; set; }
+    public float[] Stats { get; set; } = new float[(int)EStatType.Count];
 
-    public PawnStat()
-    {
-        Stats = new float[(int)EStatType.Count];
-    }
     public PawnStat(List<Stat> baseStats)
     {
-        Stats = new float[(int)EStatType.Count];
         foreach (var stat in baseStats)
         {
             Stats[(int)stat.type] = stat.value;

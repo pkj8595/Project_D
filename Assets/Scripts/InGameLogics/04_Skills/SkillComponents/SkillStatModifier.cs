@@ -17,9 +17,9 @@ namespace InGameLogics.Skill
         projectileSpeed, // 투사체 속도
 
         expireTime, // 지속시간
-        exprosionRadius, // 폭발 반경
-        exprosionDamage, // 폭발 데미지
-        exprosionDamagePer, // 폭발 데미지 비율
+        explosionRadius, // 폭발 반경
+        explosionDamage, // 폭발 데미지
+        explosionDamagePer, // 폭발 데미지 비율
         Count // 스탯 개수
     }
 

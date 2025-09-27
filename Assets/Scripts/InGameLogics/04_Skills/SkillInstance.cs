@@ -14,12 +14,25 @@ namespace InGameLogics.Skill
 
         public Transform FirePoint { get; set; }
         public IPawnBase Owner => _owner;
+
+        /// <summary>
+        /// 스킬의 기본 데이터
+        /// </summary>
         public SOSkill SkillBaseData => _skillBaseData;
+
+        /// <summary>
+        /// 스킬의 스탯을 관리하는 클래스
+        /// </summary>
         public SkillStat SkillStat => _skillStat;
+
+        /// <summary>
+        /// 스킬의 동작을 관리하는 클래스
+        /// </summary>
         public SkillAction SkillAction => _skillAction;
 
-        public float Cool { get; set; }
+        public float LastExecuteTime { get; set; }
         public float CoolTime => _skillStat[ESkillStat.coolTime];
+        public bool CanExecute => !_owner.IsDead && TimeManager.Instance.Timer - LastExecuteTime >= CoolTime;
 
         public List<SOSkillAugment> Augments { get; private set; } = new List<SOSkillAugment>();
 
@@ -32,7 +45,6 @@ namespace InGameLogics.Skill
             FirePoint = owner.FirePoint;
         }
 
-        public bool CanExecute => !_owner.IsDead && CoolTime <= Cool;
 
         public void AddAugment(SOSkillAugment augment)
         {
@@ -42,15 +54,13 @@ namespace InGameLogics.Skill
             _skillAction.AddRangeModules(augment.SkillActionModules);
         }
 
-        public void OnUpdate(float deltaTime)
-        {
-            Cool += deltaTime;
-        }
-
         public bool TryExecute()
         {
             if (!CanExecute) return false;
-            Cool = 0;
+
+            var targets = _skillBaseData.skillTargetFinder.FindTarget(this);
+
+            LastExecuteTime = TimeManager.Instance.Timer;
             Execute();
             return true;
         }

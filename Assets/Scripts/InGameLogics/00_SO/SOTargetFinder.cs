@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "skillAction_", menuName = "ScriptableObjects/skillAction", order = 1)]
-public class SOTargetFinder : SOBase
+public abstract class SOTargetFinder : SOBase
 {
+    public abstract IEnumerable<GameObject> FindTarget(InGameLogics.Skill.SkillInstance skillInstance);
 }
 
 public abstract class SOSkillActionModule : SOBase

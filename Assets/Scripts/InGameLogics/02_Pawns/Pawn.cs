@@ -9,29 +9,19 @@ public class Pawn : MonoBehaviour, IPawnBase
     public SkillContainer SkillContainer { get; private set; }
     public StatContainer StatContainer { get; private set; }
     public Transform GetTransform => transform;
-    [field : SerializeField]public Transform FirePoint { get; private set; }
+    [field: SerializeField] public Transform FirePoint { get; private set; }
 
     public EElementType ElementType { get; set; }
 
     [SerializeField] private int _id;
     //[SerializeField] private SkeletonAnimation _spine;
 
-    private PawnStat _pawnStat = new();
-
     public event Action OnDeadAction;
 
     void Awake()
     {
-        // _pawnStat.Init();
-        StatContainer = new StatContainer(_pawnStat, this);
-        SkillContainer = new SkillContainer(this);
-    }
-
-    private void Update()
-    {
-        if (IsDead) 
-            return;
-        SkillContainer.OnUpdate(Time.deltaTime);
+        StatContainer = TryGetComponent(out StatContainer statContainer) ? statContainer : null;
+        SkillContainer = TryGetComponent(out SkillContainer skillContainer) ? skillContainer : null;
     }
 
     public void Dead()

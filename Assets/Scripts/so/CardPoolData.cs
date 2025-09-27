@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CardPoolData_0", menuName = "Game Data/Deck")]
 public class CardPoolData : SOBase
 {
-    [Header("이 덱에 포함될 카드 목록과 가중치")]
+    [Header("prob data")]
     public List<CardChance> cardPool;
 
     public CardData DrawCard()

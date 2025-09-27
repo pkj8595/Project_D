@@ -5,6 +5,6 @@ using InGameLogics.Skill;
 public class SOSkill : SOBase
 {
     public SOSkillStat skillBaseStat;
-    public SOTargetFinder skillAction;
+    public SOTargetFinder skillTargetFinder;
     public SOSkillAugment[] skillAugments;
 }

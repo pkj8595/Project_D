@@ -1,40 +1,37 @@
+using ObservableCollections;
 using R3;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
-public interface IPawnStat
-{
-    public float[] Stats { get; set; }
 
-    public float this[EStatType type]
-    {
-        get => Stats[(int)type];
-        set => Stats[(int)type] = value;
-    }
-    public float this[int type]
-    {
-        get => Stats[type];
-        set => Stats[type] = value;
-    }
-    public void AddStat(EStatType type, float value);
-}
-
-public class StatContainer 
+public class StatContainer : MonoBehaviour
 {
     public FinalStat Stat { get; private set; } = new FinalStat();
     public IPawnStat BaseStat { get; private set; }
-    private List<StatModifier> _statModifiers = new ();
+    //private List<StatModifier> _statModifiers = new();
+    private ObservableList<StatModifier> _statModifiers = new();
     public IList<StatModifier> StatModifiers => _statModifiers;
 
     public event System.Action<StatContainer> OnStatChanged;
 
-    public StatContainer(IPawnStat unitStat, MonoBehaviour owner)
+    void Awake()
     {
-        BaseStat = unitStat;
-        _statModifiers.Clear();
-        Stat.CalculateFinalStats(BaseStat, _statModifiers);
-        Stat.Hp = Stat[EStatType.MaxHP];
+        BaseStat = GetComponent<IPawnStat>();
+        _statModifiers
+            .ObserveAdd()
+            .Subscribe(x => OnChangedStat())
+            .AddTo(this);
+
+        _statModifiers
+            .ObserveRemove()
+            .Subscribe(x => OnChangedStat())
+            .AddTo(this);
+
+        _statModifiers
+            .ObserveReset()
+            .Subscribe(x => OnChangedStat())
+            .AddTo(this);
+
     }
 
     public void AddModifier(StatModifier statModifier)
@@ -86,5 +83,5 @@ public class StatContainer
 
         return ratio;
     }
-        
+
 }

@@ -4,26 +4,23 @@ using UnityEngine;
 namespace InGameLogics.Skill
 {
     // 스킬 컨테이너
-    public class SkillContainer 
+    public class SkillContainer : MonoBehaviour
     {
-        private const int c_maxSkillCount = 4; 
         private IPawnBase _owner;
-        private List<SkillInstance> _skillInstances = new List<SkillInstance>();
+        [Header("Initial Skills")]
+        [SerializeField] private List<SOSkill> _initialSkills = new();
 
+        [Header("Skill Instances")]
+        [SerializeField] private List<SkillInstance> _skillInstances = new();
         public IReadOnlyList<SkillInstance> SkillInstances => _skillInstances;
-        public bool IsPushableSkill => SkillInstances.Count >= c_maxSkillCount;
 
-        public SkillContainer(IPawnBase owner)
-        {
-            _owner = owner; 
-        }
+        public event System.Action<SOSkill> OnSkillAdded;
 
-        public void OnUpdate(float deltaTime)
+        void Awake()
         {
-            foreach (var skillInstance in _skillInstances)
-            {
-                skillInstance.OnUpdate(deltaTime);
-            }
+            _owner = TryGetComponent(out IPawnBase pawnBase) ? pawnBase : null;
+            foreach (var skill in _initialSkills)
+                AddSkill(skill);
         }
 
         public bool AddSkill(SOSkill skill)
@@ -34,16 +31,13 @@ namespace InGameLogics.Skill
                 return false;
             }
 
-            if (IsPushableSkill)
-            {
-                Debug.LogWarning("SkillContainer is full, cannot add more skills.");
-                return false;
-            }
-
             _skillInstances.Add(new SkillInstance(skill, _owner));
+            OnSkillAdded?.Invoke(skill);
             return false;
         }
 
-        
+
+
+
     }
 }
