@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace InGameLogics.Skill
@@ -31,6 +32,5 @@ namespace InGameLogics.Skill
     {
         void OnUpdate(SkillInstance skill, float deltaTime);
     }
-
 
 }

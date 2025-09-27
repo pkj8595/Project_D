@@ -29,12 +29,28 @@ namespace InGameLogics.Skill
         /// 스킬의 동작을 관리하는 클래스
         /// </summary>
         public SkillAction SkillAction => _skillAction;
+        public List<SOSkillAugment> Augments { get; private set; } = new();
 
-        public float LastExecuteTime { get; set; }
+        public float LastExecuteTime { get; set; } = 0f;
         public float CoolTime => _skillStat[ESkillStat.coolTime];
-        public bool CanExecute => !_owner.IsDead && TimeManager.Instance.Timer - LastExecuteTime >= CoolTime;
+        public float NormalizedCoolTime => CoolTime == 0 ? 0 : Mathf.Clamp01((TimeManager.Instance.Timer - LastExecuteTime) / CoolTime);
+        public bool CanExecute
+        {
+            get
+            {
+                if (_owner.IsDead || TimeManager.Instance.Timer - LastExecuteTime >= CoolTime)
+                    return false;
 
-        public List<SOSkillAugment> Augments { get; private set; } = new List<SOSkillAugment>();
+                foreach (var condition in _skillBaseData.skillConditions)
+                {
+                    if (!condition.CanExecute(this))
+                        return false;
+                }
+                return true;
+            }
+        }
+
+
 
         public SkillInstance(SOSkill skillData, IPawnBase owner)
         {
@@ -54,11 +70,17 @@ namespace InGameLogics.Skill
             _skillAction.AddRangeModules(augment.SkillActionModules);
         }
 
+        public void RemoveAugment(SOSkillAugment augment)
+        {
+            if (augment == null) return;
+            Augments.Remove(augment);
+            _skillStat.RemoveRangeModifier(augment.SkillStatModifiers);
+            _skillAction.RemoveRangeModules(augment.SkillActionModules);
+        }
+
         public bool TryExecute()
         {
             if (!CanExecute) return false;
-
-            var targets = _skillBaseData.skillTargetFinder.FindTarget(this);
 
             LastExecuteTime = TimeManager.Instance.Timer;
             Execute();

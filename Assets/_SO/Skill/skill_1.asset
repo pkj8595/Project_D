@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c248ba60ce60d64b92b1f2532da637c, type: 3}
+  m_Name: skill_1
+  m_EditorClassIdentifier: Assembly-CSharp::SOSkill
+  SkillName: testSkill1
+  SkillDescription: desc
+  SkillIcon: {fileID: 21300000, guid: a7d2440e611dbc546841b9a1c910e6f3, type: 3}
+  skillBaseStat: {fileID: 0}
+  skillConditions:
+  - rid: 5069595849891774762
+  skillAugments: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5069595849891774762
+      type: {class: TargetDistanceCondition, ns: , asm: Assembly-CSharp}
+      data:
+        maxDistance: 10
+        targetTag: Enemy

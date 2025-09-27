@@ -7,8 +7,10 @@ using UnityEngine;
 public class StatContainer : MonoBehaviour
 {
     public FinalStat Stat { get; private set; } = new FinalStat();
-    public IPawnStat BaseStat { get; private set; }
+    //[SerializeReference] public IPawnStat BaseStat;
     //private List<StatModifier> _statModifiers = new();
+    [SerializeField] private List<Stat> _baseStats = new();
+
     private ObservableList<StatModifier> _statModifiers = new();
     public IList<StatModifier> StatModifiers => _statModifiers;
 
@@ -16,7 +18,6 @@ public class StatContainer : MonoBehaviour
 
     void Awake()
     {
-        BaseStat = GetComponent<IPawnStat>();
         _statModifiers
             .ObserveAdd()
             .Subscribe(x => OnChangedStat())
@@ -31,7 +32,13 @@ public class StatContainer : MonoBehaviour
             .ObserveReset()
             .Subscribe(x => OnChangedStat())
             .AddTo(this);
+    }
 
+    public void SetBaseStats(IList<Stat> baseStats)
+    {
+        _baseStats.Clear();
+        _baseStats.AddRange(baseStats);
+        OnChangedStat();
     }
 
     public void AddModifier(StatModifier statModifier)
@@ -65,7 +72,7 @@ public class StatContainer : MonoBehaviour
     private void OnChangedStat()
     {
         float hpRatio = ComputeCurHpRatio();
-        Stat.CalculateFinalStats(BaseStat, _statModifiers);
+        Stat.CalculateFinalStats(_baseStats, _statModifiers);
         Stat.Hp = Stat[EStatType.MaxHP] * hpRatio;
         OnStatChanged?.Invoke(this);
     }
@@ -75,13 +82,7 @@ public class StatContainer : MonoBehaviour
         if (Stat.Hp <= 0)
             return 0;
 
-        float ratio = Stat.Hp / Stat[EStatType.MaxHP];
-        if (ratio < 0)
-            ratio = 0;
-        else if (ratio > 1)
-            ratio = 1;
-
-        return ratio;
+        return Mathf.Clamp01(Stat.Hp / Stat[EStatType.MaxHP]);
     }
 
 }

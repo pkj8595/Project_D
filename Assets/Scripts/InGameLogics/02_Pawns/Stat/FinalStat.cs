@@ -18,12 +18,14 @@ public class FinalStat
         set => FinalStats[(int)type] = value;
     }
 
-    public void CalculateFinalStats(IPawnStat pawnStat, IList<StatModifier> statModifiers)
+    public void CalculateFinalStats(IList<Stat> baseStats, IList<StatModifier> statModifiers)
     {
         for (int i = 0; i < FinalStats.Length; i++)
-        {
-            FinalStats[i] = pawnStat[i];
-        }
+            FinalStats[i] = 0;
+
+        foreach (var baseStat in baseStats)
+            FinalStats[(int)baseStat.type] += baseStat.value;
+
         foreach (var modifier in statModifiers)
         {
             switch (modifier.ModType)

@@ -36,6 +36,18 @@ namespace InGameLogics.Skill
             return false;
         }
 
+        public bool ExecuteSkill_Test()
+        {
+            foreach (var skill in _skillInstances)
+            {
+                if (skill.TryExecute())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
 
 

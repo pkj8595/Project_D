@@ -5,8 +5,8 @@ namespace InGameLogics.Skill
 {
     public class SkillAction
     {
-        private List<SOSkillActionModule> _baseModules = new();
-        private List<SOSkillActionModule> _addedModules = new();
+        private List<ISkillActionModule> _baseModules = new();
+        private List<ISkillActionModule> _addedModules = new();
 
         private List<IOnExecute> _onExecute = new();
         private List<IOnHit> _onHitModules = new();
@@ -37,17 +37,34 @@ namespace InGameLogics.Skill
             _isDirty = true;
         }
 
-        public void AddModule(SOSkillActionModule module)
+        public void AddModule(ISkillActionModule module)
         {
             if (module == null) return;
             _addedModules.Add(module);
             _isDirty = true;
         }
 
-        public void AddRangeModules(IList<SOSkillActionModule> modules)
+        public void AddRangeModules(IList<ISkillActionModule> modules)
         {
             if (modules == null || modules.Count == 0) return;
             _addedModules.AddRange(modules);
+            _isDirty = true;
+        }
+
+        public void RemoveModule(ISkillActionModule module)
+        {
+            if (module == null) return;
+            _addedModules.Remove(module);
+            _isDirty = true;
+        }
+
+        public void RemoveRangeModules(IList<ISkillActionModule> modules)
+        {
+            if (modules == null || modules.Count == 0) return;
+            foreach (var module in modules)
+            {
+                RemoveModule(module);
+            }
             _isDirty = true;
         }
 
@@ -55,7 +72,7 @@ namespace InGameLogics.Skill
         {
             var finalModules = _baseModules
                 .Concat(_addedModules)
-                .OrderBy(m => m.priority)
+                .OrderBy(m => m.Priority)
                 .ToList();
 
             _onExecute.Clear();

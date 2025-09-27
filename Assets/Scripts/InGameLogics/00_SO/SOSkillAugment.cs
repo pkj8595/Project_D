@@ -6,10 +6,8 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "skill_", menuName = "ScriptableObjects/skill", order = 1)]
 public class SOSkillAugment : SOBase
 {
-    public string SkillName;
-    public string SkillDescription;
-    public Sprite SkillIcon;
+    public List<SkillStatModifier> SkillStatModifiers = new();
 
-    public List<SkillStatModifier> SkillStatModifiers = new List<SkillStatModifier>();
-    public List<SOSkillActionModule> SkillActionModules = new List<SOSkillActionModule>();
+    [SerializeReference]
+    public List<ISkillActionModule> SkillActionModules = new();
 }

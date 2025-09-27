@@ -10,7 +10,12 @@ public class GridObject : MonoBehaviour
     public StatContainer StatContainer { get; private set; }
     public virtual void Init(List<Stat> baseStats, Vector2 initPos)
     {
-        StatContainer = TryGetComponent(out StatContainer statContainer) ? statContainer : null;
+        if (TryGetComponent(out StatContainer statContainer))
+        {
+            StatContainer = statContainer;
+            StatContainer.SetBaseStats(baseStats);
+        }
+
         transform.position = initPos;
     }
 

@@ -15,7 +15,9 @@ public class UIManager : LocalSingleton<UIManager>
         // 유저 골드 데이터 변경 시, UI 업데이트
         Managers.State.Resource.Gold.Subscribe(amount =>
         {
-            goldText.text = "Gold: " + amount;
+            //string 이 2번 할당되서 메모리 낭비 방지
+            // goldText.text = "Gold: " + amount;
+            goldText.text = $"Gold: {amount}";
         })
         .AddTo(this);
     }

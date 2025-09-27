@@ -26,6 +26,8 @@ public class EnemySpawner : MonoBehaviour
         /// <param name="waveEventData"></param>
         public Wave(WaveEventData waveEventData)
         {
+            cancellationTokenSource?.Cancel();
+            cancellationTokenSource?.Dispose();
             cancellationTokenSource = new CancellationTokenSource();
 
             this.waveEventData = waveEventData;
@@ -41,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
         {
             // 이벤트 시작 시간까지 대기
             float currentTime = Managers.Time.Timer;
-            await UniTask.Delay(TimeSpan.FromSeconds(Mathf.Max(0f, waveEventData.startEventTime-currentTime)), cancellationToken: cancellationTokenSource.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(Mathf.Max(0f, waveEventData.startEventTime - currentTime)), cancellationToken: cancellationTokenSource.Token);
 
             while (true)
             {
@@ -68,8 +70,8 @@ public class EnemySpawner : MonoBehaviour
                 var enemyController = enemyObject.GetComponent<Enemy>();
 
                 // 랜덤 위치 생성 (카메라 밖에서 생성)
-                var viewportPosY = Random.Range(0f-0.1f, 1f+0.1f);
-                var viewportPosX = viewportPosY >= 0f && viewportPosY <= 1f ? (Random.Range(0, 1+1) == 0 ? 0f-0.1f : 1f+0.1f) : Random.Range(0f-0.1f, 1f+0.1f);
+                var viewportPosY = Random.Range(0f - 0.1f, 1f + 0.1f);
+                var viewportPosX = viewportPosY >= 0f && viewportPosY <= 1f ? (Random.Range(0, 1 + 1) == 0 ? 0f - 0.1f : 1f + 0.1f) : Random.Range(0f - 0.1f, 1f + 0.1f);
                 var initPos = Camera.main.ViewportToWorldPoint(new Vector2(viewportPosX, viewportPosY));
 
                 // 적 스탯 가중치 적용
@@ -93,8 +95,8 @@ public class EnemySpawner : MonoBehaviour
         /// </summary>
         public void Dispose()
         {
-            cancellationTokenSource.Cancel();
-            cancellationTokenSource.Dispose();
+            cancellationTokenSource?.Cancel();
+            cancellationTokenSource?.Dispose();
 
             waveEventData = null;
         }
@@ -120,7 +122,7 @@ public class EnemySpawner : MonoBehaviour
     /// <returns></returns>
     private async UniTask CreateWave(float delay, WaveEventData waveEventData)
     {
-        await UniTask.Delay(TimeSpan.FromSeconds(delay));
+        await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: destroyCancellationToken);
         var wave = new Wave(waveEventData);
     }
 }

@@ -33,9 +33,9 @@ namespace InGameLogics.Skill
     [System.Serializable]
     public class SkillStatModifier
     {
-        private ESkillStat _statType;
-        private float _value;
-        private ESkillStatModifierType _modifierType;
+        [SerializeField] private ESkillStat _statType;
+        [SerializeField] private float _value;
+        [SerializeField] private ESkillStatModifierType _modifierType;
 
         public ESkillStat StatType => _statType;
         public float Value => _value;

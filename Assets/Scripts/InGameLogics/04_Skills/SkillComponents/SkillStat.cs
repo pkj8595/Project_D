@@ -57,6 +57,16 @@ namespace InGameLogics.Skill
             CalculateFinalStats();
         }
 
+        public void RemoveRangeModifier(List<SkillStatModifier> modifiers)
+        {
+            if (modifiers == null || modifiers.Count == 0) return;
+            foreach (var modifier in modifiers)
+            {
+                RemoveModifier(modifier);
+            }
+            CalculateFinalStats();
+        }
+
         public void ClearModifiers()
         {
             _statModifiers.Clear();
